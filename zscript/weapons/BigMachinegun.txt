@@ -1,0 +1,61 @@
+class BigMachineGun : NinetiesWeapon replaces Chaingun
+{
+    default
+    {
+        Weapon.SlotNumber 4;
+    }
+    States
+    {
+    Spawn:
+        MGUN A -1;
+        Stop;
+    Select:
+		BIGM A 1 A_Raise;
+		Wait;
+	Deselect:
+		BIGM A 1 A_Lower;
+		Wait;
+	Ready:
+		BIGM A 1 A_WeaponReady;
+		Loop;
+	Fire:
+		BIGM A 1 BRIGHT {
+            Invoker.realY = frandom(10.0,20.0);
+            A_StartSound("weapons/bigmachinegun", CHAN_WEAPON);
+			A_GunFlash();
+            A_WeaponOffset(frandom(-5.0, 5.0), (Invoker.realY + 32.0), WOF_INTERPOLATE);
+			A_FireBullets(5,2.5,-1,5,"BigBulletPuff");
+		}
+		BIGM A 1 BRIGHT A_Overlay(69,"GunRecoil");
+		BIGM A 3;
+		Goto Ready;
+	Flash:
+		BIGM BB 1 BRIGHT A_Light2;
+		BIGM C 1 BRIGHT A_Light1;
+        TNT1 A 1;
+		TNT1 A 2 A_Light0;
+		Goto LightDone;
+	}
+}
+
+class BigBulletPuff : Actor
+{
+    default
+    {
+        Scale 0.75;
+        +NoGravity;
+        +NoInteraction;
+    }
+    States
+    {
+    Spawn:
+        UPUF A 3 NoDelay {
+            if ( random(0,255) >= 248 )
+            {
+                A_StartSound("weapons/ricochet");
+            }
+        }
+        UPUF BCD 3 BRIGHT;
+        Stop;
+    }
+}

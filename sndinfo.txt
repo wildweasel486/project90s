@@ -1,0 +1,146 @@
+//feh
+
+weapons/reload1 sounds/itemups/wpnup2.wav
+
+weapons/empty sounds/guns/gunclick.wav
+
+weapons/badpistol1 sounds/guns/magnum1.wav
+weapons/m16 sounds/guns/pistol1.wav
+weapons/bigmachinegun sounds/guns/tankshel.wav
+
+weapons/ricochet sounds/ricochet.wav
+
+//Enemies
+
+$random SpewGuy1/death { sg1death1 sg1death2 sg1death3 sg1death4 sg1death5 sg1death6 sg1death7 sg1death8 }
+sg1death1 wimpdth1
+sg1death2 wimpdth2
+sg1death3 wimpdth3
+sg1death4 wimpdth4
+sg1death5 wimpdth5
+sg1death6 wimpdth6
+sg1death7 wimpdth7
+sg1death8 wimpdth8
+$random SpewGuy1/sight { sg1sight1 sg1sight2 sg1sight3 sg1sight4 }
+sg1sight1 wimpsit1
+sg1sight2 wimpsit2
+sg1sight3 wimpsit3
+sg1sight4 wimpsit4
+$random SpewGuy1/pain { sg1pain1 sg1pain2 sg1pain3 sg1pain4 sg1pain5 sg1pain6 sg1pain7 }
+sg1pain1 wimppn1
+sg1pain2 wimppn2
+sg1pain3 wimppn3
+sg1pain4 wimppn4
+sg1pain5 wimppn5
+sg1pain6 wimppn6
+sg1pain7 wimppn7
+
+weapons/SpewGuyBall sounds/guns/plasma1.wav
+
+$random SpewGuy2/death { 
+    sg2death1
+    sg2death2
+    sg2death3
+    sg2death4
+    sg2death5
+    sg2death6
+    sg2death7
+}
+sg2death1 scrmdth1
+sg2death2 scrmdth2
+sg2death3 scrmdth3
+sg2death4 scrmdth4
+sg2death5 scrmdth5
+sg2death6 scrmdth6
+sg2death7 scrmdth7
+$random SpewGuy2/sight { 
+    sg2sight1
+    sg2sight2
+    sg2sight3
+    sg2sight4
+    sg2sight5
+}
+sg2sight1 scrmsit1
+sg2sight2 scrmsit2
+sg2sight3 scrmsit3
+sg2sight4 scrmsit4
+sg2sight5 scrmsit5
+$random SpewGuy2/pain {
+    sg2pain1
+    sg2pain2
+    sg2pain3
+    sg2pain4
+    sg2pain5
+}
+sg2pain1 scrmpn1
+sg2pain2 scrmpn2
+sg2pain3 scrmpn3
+sg2pain4 scrmpn4
+sg2pain5 scrmpn5
+
+weapons/SpewGuyThump thump1
+$random weapons/SpewGuyFart {
+    Fart1
+    Fart2
+    Fart3
+    Fart4
+    Fart5
+    Fart6
+}
+Fart1 Fart1
+Fart2 Fart2
+Fart3 Fart3
+Fart4 Fart4
+Fart5 Fart5
+Fart6 Fart6
+
+$random SpewGuy3/death { 
+    sg3death1
+    sg3death2
+    sg3death3
+    sg3death4
+}
+sg3death1 grwldth1
+sg3death2 grwldth2
+sg3death3 grwldth3
+sg3death4 grwldth4
+$random SpewGuy3/sight { 
+    sg3sight1
+    sg3sight2
+    sg3sight3
+    sg3sight4
+    sg3sight5
+    sg3sight6
+}
+sg3sight1 grwlsit1
+sg3sight2 grwlsit2
+sg3sight3 grwlsit3
+sg3sight4 grwlsit4
+sg3sight5 grwlsit5
+sg3sight6 grwlsit6
+$random SpewGuy3/pain {
+    sg3pain1
+    sg3pain2
+    sg3pain3
+}
+sg3pain1 grwlpn1
+sg3pain2 grwlpn2
+sg3pain3 grwlpn3
+
+$random helltopayimp/sight {
+	impsit1
+	impsit2
+	impsit3
+}
+impsit1	impsit1
+impsit2	impsit2
+impsit3	impsit3
+
+$random helltopayimp/active { impact1 impact2 }
+impact1 impact1
+impact2 impact2
+
+$random helltopayimp/death { impdth1 impdth2 }
+impdth1 impdth1
+impdth2 impdth2
+imppain imppain

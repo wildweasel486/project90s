@@ -1,0 +1,199 @@
+class NinetiesPistol : NinetiesWeapon
+{
+	default
+	{
+		Weapon.SlotNumber 2;
+		+Weapon.NoAutoFire;
+	}
+	bool isDualed;
+	bool isFiringRight;
+	bool isFiringLeft;
+	int AmmoRightGun;
+	int AmmoLeftGun;
+	States
+	{
+	Select:
+		PIS9 A 0 {
+			Invoker.AmmoRightGun = 8;
+			Invoker.AmmoLeftGun = 8;
+		}
+		PIS9 A 1 A_Raise;
+		Wait;
+	Deselect:
+		PIS9 A 0 {
+			if ( Invoker.isDualed == true )
+			{
+				Invoker.isDualed = false;
+				A_Overlay(22, "AltfireLower");
+			}
+			A_Overlay(21, "FakeLower");
+		}
+		TNT1 A 1 A_Lower;
+		Wait;
+	FakeLower:
+		PIS9 AAAAAAAAAAAAAAAA 1 A_OverlayOffset(0, 0, 8, WOF_ADD|WOF_INTERPOLATE);
+		TNT1 A 1;
+		Stop;
+	Ready:
+		TNT1 A 0 A_Overlay(21, "FakeReady");
+	ReadyNoSetup:
+		TNT1 A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		Loop; 
+	Reload:
+		TNT1 A 1 {
+			if ( Invoker.isFiringRight == false && Invoker.AmmoRightGun < 8)
+			{
+				Invoker.isFiringRight = true;
+				A_Overlay(21, "ClickyDance");
+				A_StartSound("weapons/reload1", CHAN_WEAPON, CHANF_OVERLAP);
+			}
+			if ( Invoker.isDualed == true && Invoker.isFiringLeft == false && Invoker.AmmoLeftGun < 8 )
+			{ 
+				Invoker.isFiringLeft = true;
+				A_Overlay(22, "ClickyDance2");
+				A_StartSound("weapons/reload1", CHAN_WEAPON, CHANF_OVERLAP);
+			}
+		}
+		Goto ReadyNoSetup;
+	FakeReady:
+		PIS9 A 1 { Invoker.isFiringRight = false; }
+		Loop;
+	FakeReady2:
+		PIS9 A 1 {
+			A_OverlayFlags(0, PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR, 1);
+			Invoker.isFiringLeft = false;
+		}
+		Loop;
+	ClickyDance:
+		PIS9 AAAAAAAAA 1 A_OverlayOffset(0, 0, 10, WOF_INTERPOLATE|WOF_ADD);
+		PIS9 A 0 {
+			Invoker.AmmoRightGun = 8;
+		}
+		PIS9 AAAAAAAAA 1 A_OverlayOffset(0, 0, -10, WOF_INTERPOLATE|WOF_ADD);
+		Goto FakeReady;
+	ClickyDance2:
+		PIS9 A 1 A_OverlayFlags(0, PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR, 1);
+		PIS9 AAAAAAAAA 1 A_OverlayOffset(0, 0, 10, WOF_INTERPOLATE|WOF_ADD);
+		PIS9 A 0 {
+			Invoker.AmmoLeftGun = 8;
+		}
+		PIS9 AAAAAAAAA 1 A_OverlayOffset(0, 0, -10, WOF_INTERPOLATE|WOF_ADD);
+		Goto FakeReady2;
+	Fire:
+		TNT1 A 0 {
+			if ( Invoker.AmmoRightGun > 0 && Invoker.isFiringRight == false ) { A_Overlay(21, "FakeFire"); }
+            else if ( Invoker.AmmoRightGun == 0 ) { A_StartSound("weapons/empty", CHAN_WEAPON, CHANF_OVERLAP); }
+        }
+			/*else if ( Invoker.isDualed == true && Invoker.isFiringLeft == false && Invoker.AmmoLeftGun > 0 )
+			{
+				if ( Invoker.AmmoLeftGun > 0 ) { A_Overlay(22, "FakeFire2"); }
+				else { A_StartSound("weapons/empty", CHAN_WEAPON, CHANF_OVERLAP); }
+			}*/
+		TNT1 A 1;
+		Goto ReadyNoSetup;
+    GenericFire:
+        TNT1 A 0 {
+            A_StartSound("weapons/badpistol1", CHAN_WEAPON);
+			A_GunFlash();
+			A_FireBullets(5,5,-1,5,"BulletPuff");
+            A_AlertMonsters();
+        }
+        Stop;
+	FakeFire:
+		PIS9 B 1 BRIGHT {
+			Invoker.isFiringRight = true;
+			Invoker.AmmoRightGun -= 1;
+			A_LogInt(Invoker.AmmoRightGun);
+			Invoker.realY = frandom(16.0,20.0);
+            A_Overlay(86, "GenericFire");
+			A_OverlayOffset(21, frandom(24.0, 40.0), (Invoker.realY), WOF_INTERPOLATE);
+		}
+		PIS9 C 1 BRIGHT A_Overlay(69, "GunRecoilRight");
+		PIS9 D 3;
+		PIS9 A 4;
+		Goto FakeReady;
+	FakeFire2:
+		PIS9 B 1 BRIGHT {
+			Invoker.isFiringLeft = true;
+			Invoker.AmmoLeftGun -= 1;
+			A_LogInt(Invoker.AmmoLeftGun);
+			A_OverlayFlags(0, PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR, 1);
+			Invoker.realY = frandom(16.0,20.0);
+            A_Overlay(86, "GenericFire");
+			A_OverlayOffset(22, frandom(24.0, 40.0), (Invoker.realY), WOF_INTERPOLATE);
+		}
+		PIS9 C 1 BRIGHT A_Overlay(69, "GunRecoilLeft");
+		PIS9 D 3;
+		PIS9 A 4;
+		Goto FakeReady2;
+	Altfire:
+		TNT1 A 1 {
+			if ( Invoker.isDualed == true )
+			{   
+				if ( Invoker.AmmoLeftGun > 0 && Invoker.isFiringLeft == false ) { A_Overlay(22, "FakeFire2"); }
+				else if ( Invoker.AmmoLeftGun == 0 ) { A_StartSound("weapons/empty", CHAN_WEAPON, CHANF_OVERLAP); }
+			}
+			else if ( CountInv("NinetiesExtraPistol") >= 1 )
+			{
+				Invoker.isDualed = true;
+				//A_Log("Gun dual-wield enabled.");
+				A_Overlay(22, "AltfireRaise");
+				A_OverlayOffset(22, 0, 128);
+			}
+		}
+		Goto Ready;
+	AltfireRaise:
+		PIS9 A 0 { Invoker.isFiringLeft = true; }
+		PIS9 A 1 Offset(0,128) A_OverlayFlags(0, PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR, 1);
+		PIS9 AAAAAAAAAAAAAAAA 1 A_OverlayOffset(0, 0, -8, WOF_ADD|WOF_INTERPOLATE);
+		Goto FakeReady2;
+	AltfireLower:
+		PIS9 A 0 {
+			Invoker.isDualed = false;
+			A_OverlayFlags(0, PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR, 1);
+		}
+		PIS9 AAAAAAAAAAAAAAAA 1 A_OverlayOffset(0, 0, 8, WOF_ADD|WOF_INTERPOLATE);
+		Stop;
+	GunRecoilRight:
+		TNT1 A 1 ;
+		TNT1 A 0 {
+		    if (invoker.realY <= 0.5 ) {
+			invoker.realY = 0;
+			return ResolveState("Null");
+		    }
+
+		    invoker.realY = invoker.realY / 2.0;
+		    A_OverlayOffset(21, ( OverlayX(21) - (OverlayX(21)/ 2.0) ), (invoker.realY), WOF_INTERPOLATE);
+		    return ResolveState("GunRecoilRight");
+		}
+		Stop;
+	GunRecoilLeft:
+		TNT1 A 1 ;
+		TNT1 A 0 {
+		    if (invoker.realY <= 0.5 ) {
+			invoker.realY = 0;
+			return ResolveState("Null");
+		    }
+
+		    invoker.realY = invoker.realY / 2.0;
+		    A_OverlayOffset(22, ( OverlayX(22) - (OverlayX(22)/ 2.0) ), (invoker.realY), WOF_INTERPOLATE);
+		    return ResolveState("GunRecoilLeft");
+		}
+		Stop;
+	}
+}
+
+class NinetiesExtraPistol : Inventory replaces Chainsaw
+{
+	default
+	{
+		inventory.pickupsound "misc/w_pkup";
+		inventory.pickupmessage "Found an extra pistol.";
+	}
+	States
+	{
+	Spawn:
+		PIST A -1;
+		Stop;
+	}
+}

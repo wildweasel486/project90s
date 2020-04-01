@@ -1,0 +1,36 @@
+class Fartgun : NinetiesWeapon replaces Shotgun
+{
+    default
+    {
+        Weapon.SlotNumber 3;
+    }
+    States
+    {
+    Spawn:
+        BAZK A -1;
+        Stop;
+    Select:
+		BAZG A 1 A_Raise;
+		Wait;
+	Deselect:
+		BAZG A 1 A_Lower;
+		Wait;
+	Ready:
+		BAZG A 1 A_WeaponReady;
+		Loop;
+    OffsetYStatus:
+        TNT1 A 1 A_Logfloat(Invoker.realY);
+        Loop;
+	Fire:
+		BAZG A 1 BRIGHT {
+            Invoker.realY = frandom(10.0,20.0);
+            A_StartSound("weapons/SpewGuyThump", chan_weapon);
+			A_GunFlash();
+            A_WeaponOffset(frandom(-5.0, 5.0), (Invoker.realY + 32.0), WOF_INTERPOLATE);
+			A_FireProjectile("SpewGuyFartCloud");
+		}
+		BAZG A 1 BRIGHT A_Overlay(69,"GunRecoil");
+		BAZG A 10;
+		Goto Ready;
+	}
+}

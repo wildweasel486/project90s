@@ -1,0 +1,192 @@
+ACTOR SpewGuy : ChaingunGuy replaces ChaingunGuy
+{
+    SeeSound "SpewGuy3/sight"
+    PainSound "SpewGuy3/pain"
+    DeathSound "SpewGuy3/death"
+    Health 65
+    //+hurtspecies
+	States
+	{
+	Spawn:
+		SPEW AB 10 A_Look
+		Loop
+	See:
+		SPEW ABCD 4 A_Chase
+		Loop
+	Pain:
+		SPEW G 6 A_Pain
+		Goto See
+	Death:
+		SPEW G 3
+		SPEW H 3 A_Scream
+		SPEW I 3 A_NoBlocking
+		SPEW JKLM 3
+		SPEW N -1
+		Stop
+	XDeath:
+		SPEW O 3
+		SPEW P 3 A_XScream
+		SPEW Q 3 A_NoBlocking
+		SPEW RSTUV 3
+		SPEW W -1
+		Stop
+	Missile:
+		SPEW E 5 A_FaceTarget
+		SPEW FFF 3 BRIGHT {
+            A_PlaySound("weapons/SpewGuyBall", chan_weapon);
+            A_CustomMissile("SpewGuyBullet");
+        }
+		SPEW E 10
+		Goto See
+	}
+}
+
+ACTOR SpewGuyWeaker : SpewGuy replaces Zombieman
+{
+    Translation "160:167=112:127", "224:231=112:115", "112:127=80:111", "192:207=208:223"
+    Health 20
+    SeeSound "SpewGuy1/sight"
+    PainSound "SpewGuy1/pain"
+    DeathSound "SpewGuy1/death"
+	DropItem "NinetiesExtraPistol", 16
+}
+
+ACTOR SpewGuyBullet : PlasmaBall
+{
+    Scale 0.25
+    Speed 40
+    Damage 1
+    +STRIFEDAMAGE
+    SeeSound ""
+    DeathSound "weapons/ricochet"
+}
+
+ACTOR SpewGuy2 : ShotgunGuy replaces ShotgunGuy
+{
+    SeeSound "SpewGuy2/sight"
+    PainSound "SpewGuy2/pain"
+    DeathSound "SpewGuy2/death"
+    Health 40
+    DamageFactor "Fart", 0.0
+    //+hurtspecies
+	States
+	{
+	Spawn:
+		KICK AB 10 A_Look
+		Loop
+	See:
+		KICK ABCD 4 A_Chase
+		Loop
+	Pain:
+		KICK G 6 A_Pain
+		Goto See
+	Death:
+		KICK G 3
+		KICK H 3 A_Scream
+		KICK I 3 A_NoBlocking
+		KICK JKLM 3
+		KICK N -1
+		Stop
+	XDeath:
+		KICK O 3
+		KICK P 3 A_XScream
+		KICK Q 3 A_NoBlocking
+		KICK RSTUV 3
+		KICK W -1
+		Stop
+	Missile:
+		KICK E 5 A_FaceTarget
+		KICK F 10 BRIGHT {
+            A_PlaySound("weapons/SpewGuyThump", chan_weapon);
+            A_CustomMissile("SpewGuyFartCloud");
+        }
+		KICK E 10
+		Goto See
+	}
+}
+
+ACTOR SpewGuyFartCloud
+{
+    PROJECTILE
+	+StrifeDamage
+    RenderStyle Add
+    Alpha 0.75
+    Speed 15
+    Damage 5
+    var int user_farts;
+    DeathSound "weapons/SpewGuyFart"
+    States
+    {
+    Spawn:
+        SPW1 AB 2 A_SpawnItemEx("SpewGuyFartTrail")
+        Loop
+    Death:
+        SPW1 CDE 3 {
+            while (user_farts < 10) {
+                A_SpawnItemEx("SpewGuyFartTrail", 0,0,0, frandom(1.0,2.0),frandom(1.0,2.0),frandom(-1.0,1.0), frandom(0.0,359.9));
+                A_SetUserVar(user_farts, user_farts + 1);
+            }
+        }
+        Stop
+    }
+}
+
+ACTOR SpewGuyFartTrail
+{
+    Scale 0.5
+    RenderStyle Add
+    Alpha 0.5
+    +NOGRAVITY
+    +NOINTERACTION
+    States
+    {
+    Spawn:
+        FRTP ABCDEFGHIJ 3
+        Stop
+    }
+}
+
+ACTOR RenderedImp : DoomImp replaces DoomImp
+{
+	SeeSound "helltopayimp/sight"
+	ActiveSound "helltopayimp/active"
+	DeathSound "helltopayimp/death"
+	PainSound "imppain"
+	States
+	{
+	Spawn:
+		HIMP AB 10 A_Look
+		Loop
+	See:
+		HIMP AABBCCDD 3 A_Chase
+		Loop
+	Melee:
+	Missile:
+		HIMP EF 8 A_FaceTarget
+		HIMP G 6 A_TroopAttack
+		Goto See
+	Pain:
+		HIMP H 2
+		HIMP H 2 A_Pain
+		Goto See
+	Death:
+		HIMP I 8
+		HIMP J 8 A_Scream
+		HIMP K 6
+		HIMP L 6 A_NoBlocking
+		HIMP M -1
+		Stop
+	XDeath:
+		HIMP N 5
+		HIMP O 5 A_XScream
+		HIMP P 5
+		HIMP Q 5 A_NoBlocking
+		HIMP RST 5
+		HIMP U -1
+		Stop
+	Raise:
+		HIMP ML 8
+		HIMP KJI 6
+		Goto See
+	}
+}

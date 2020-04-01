@@ -1,0 +1,4 @@
+Credits - These are the WADs I borrowed material from.
+
+D2ENH10 - Large bullet puff sprites.
+Hell To Pay - Several enemy sprites, and the "fart gun."

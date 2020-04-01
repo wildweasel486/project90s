@@ -1,0 +1,6 @@
+version "4.3"
+#include "zscript/weapons/baseweapon.txt"
+#include "zscript/weapons/pistol.txt"
+#include "zscript/weapons/Fartgun.txt"
+#include "zscript/weapons/BigMachinegun.txt"
+#include "zscript/weapons/m16.txt"

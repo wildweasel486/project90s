@@ -1,0 +1,20 @@
+// PROJECT NINETIES
+// by wildweasel
+// based on too many 199x wads to count
+// THE GOING RULES:
+// 1. Resources must ONLY be from WAD files between 1994 and 1997,
+//    except for sound files which must have been date stamped no later
+//    than 1995.
+// 2. Resources must ONLY receive minor modifications if desperately needed.
+//    I may not correct for noise reduction, apply filters, remove
+//    clicks or pops, or significantly redraw any graphic. Modifications
+//    may involve cropping, realigning, and color translation.
+// 3. DO YOUR BEST YOU HAVE EVER BEEN
+
+#include "actors/enemies.txt"
+
+ACTOR WW90sPlayer : DoomPlayer
+{
+	Player.StartItem "NinetiesPistol"
+	Player.WeaponSlot 2, "NinetiesPistol"
+}
