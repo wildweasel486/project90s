@@ -1,4 +1,22 @@
-Credits - These are the WADs I borrowed material from.
+Credits - These are the WADs I borrowed material from. As usual this is
+a work in progress and I will be doing a full audit once I've decided
+what all's staying and what's getting deleted.
 
 D2ENH10 - Large bullet puff sprites.
 Hell To Pay - Several enemy sprites, and the "fart gun."
+Doom Must Fall - The unfinished rocket launcher.
+Strain - Borrowed a couple enemy sprites.
+Kick Attack - Various enemy sprites, and "Spew!" clouds.
+Marine Doom - The M16
+The Sky May Be/Kansam's Trial - Many sound effects
+Geek Doom - Sound effects
+Doom Gold 15 Bright - Sound effects
+Aliens Doom, Aliens TC, AvPvT and many other Aliens mods - Sound effects
+Aliens TC - Smartgun sprites
+The Innocent Crew - Flamethrower and other things
+
+To Be Determined:
+- The rest of the enemy sprites
+- Any other weapons I plan on adding
+- Where'd the HMG come from?
+- ????
